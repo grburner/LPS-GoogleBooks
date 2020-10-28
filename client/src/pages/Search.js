@@ -21,11 +21,11 @@ const Search = () => {
         
         return (
             <Card>
-            <Card.Header>{'element.volumeInfo.authors'}</Card.Header>
+            <Card.Header>{element.volumeInfo.authors[0]}</Card.Header>
             <Card.Body>
                 <Row>
                     <Col xs={2}>
-                        <Image src={'element.volumeInfo.imageLinks.smallThumbnail'} rounded />
+                        <Image src={element.volumeInfo.imageLinks.smallThumbnail} rounded />
                     </Col>
                     <Col xs={10}>
                         <Card.Title>{element.volumeInfo.title}</Card.Title>
