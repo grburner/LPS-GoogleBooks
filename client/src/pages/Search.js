@@ -58,7 +58,7 @@ const Search = () => {
                         <Card.Text>
                             {element.volumeInfo.description === undefined ? 'no description :(' : element.volumeInfo.description}
                         </Card.Text>
-                        <Button data-index={index} variant="primary" onClick={saveBook}>Save Book</Button>
+                        <Button data-index={index} variant="primary" onClick={saveBook} href="/">Save Book</Button>
                     </Col>
                 </Row>
             </Card.Body>

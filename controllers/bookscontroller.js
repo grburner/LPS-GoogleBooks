@@ -45,5 +45,5 @@ module.exports = {
     .then(data => {
       res.send(data.data)
     })
-  }
+  },
 };

@@ -8,6 +8,10 @@ router
   .post(booksController.create);
 
 router
+  .route("/:id")
+  .delete(booksController.remove);
+
+router
   .route("/searchbook/:search")
   .get(booksController.getSearchBook)
 

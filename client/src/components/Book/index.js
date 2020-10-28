@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios"
 
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
@@ -6,7 +7,11 @@ import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
 
-const Book = ({ data }) => {
+const Book = ({data, key}) => {
+
+    const removeBook = (e) => {
+        axios.delete('api/books/' + data._id)
+    }
     return(
         <Card>
             <Card.Header>{data.author}</Card.Header>
@@ -20,7 +25,10 @@ const Book = ({ data }) => {
                         <Card.Text>
                             {data.description}
                         </Card.Text>
-                        <Button variant="primary" href={data.link}>See book</Button>
+                        <Row>
+                            <Button variant="primary" href={data.link}>See book</Button>
+                            <Button data-index={key} onClick={removeBook} href="/">Remove Book</Button>
+                        </Row>
                     </Col>
                 </Row>
             </Card.Body>

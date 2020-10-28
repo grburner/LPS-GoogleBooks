@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container'
 
 const BookList = () => {
     const [books, setBooks] = useState();
-    //fetch('http://localhost:3001/api/books').then(res => console.log(res));
 
     const myRequest = new Request('/api/books', {
         method: 'GET',
@@ -22,9 +21,10 @@ const BookList = () => {
     }, [])
 
     const renderBook = (book, index) => {
+      console.log(books)
       return(
         <Container>
-          <Book key={index} data={book}></Book>
+          <Book key={index} data={book} on></Book>
         </Container>
       )
     }
