@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import Book from '../Book';
-import API from '../../utils/API';
+import Book from '../components/Book';
+import API from '../utils/API';
 import Container from 'react-bootstrap/Container'
 
 const BookList = () => {

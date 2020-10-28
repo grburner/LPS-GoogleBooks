@@ -1,9 +1,11 @@
-// import axios from "axios";
-// import { response } from "express";
+import axios from "axios"
 
-// export default {
-//   // Gets all books
-//   getBooks: function() {
-//     return fetch("/api/books")
-//   }
-// }
+export default {
+  // Gets all saved books
+  getBooks: function() {
+    return fetch("/api/books")
+  },
+  getSearchBooks: function(search) {
+      return axios.get("api/books/searchbook/" + search)
+  }
+}

@@ -1,4 +1,8 @@
 const db = require("../models");
+const fetch = require("node-fetch");
+const axios = require("axios");
+
+const key = 'AIzaSyA8sX6HxJ81KQ1pUufSXWnzBzX46iVqxqA'
 
 // Defining methods for the booksController
 module.exports = {
@@ -32,5 +36,14 @@ module.exports = {
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  getSearchBook: function(req, res) {
+    const query = req.params.search
+    const queryString = encodeURI(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${key}`)
+    console.log(queryString)
+    axios.get(queryString)
+    .then(data => {
+      res.send(data.data)
+    })
   }
 };
