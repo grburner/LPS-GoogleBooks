@@ -46,17 +46,19 @@ const Search = () => {
         console.log(element)
         
         return (
-            <Card>
-            <Card.Header>{element.volumeInfo.authors[0] === "undefined" ? 'no author :(' : element.volumeInfo.authors[0]}</Card.Header>
+            <Card className={'my-2'}>
+            <Card.Header>{element.volumeInfo.authors[0]}</Card.Header>
             <Card.Body>
                 <Row>
                     <Col xs={2}>
-                        <Image src={element.volumeInfo.imageLinks.smallThumbnail === "undefined" ? 'no image :(' : element.volumeInfo.imageLinks.smallThumbnail} rounded />
+                        <Image src={element.volumeInfo.imageLinks.smallThumbnail} rounded />
                     </Col>
                     <Col xs={10}>
-                        <Card.Title>{element.volumeInfo.title === "undefined" ? 'no title :(' : element.volumeInfo.title}</Card.Title>
+                        <Card.Title>
+                            {element.volumeInfo.title}
+                        </Card.Title>
                         <Card.Text>
-                            {element.volumeInfo.description === "undefined" ? 'no description :(' : element.volumeInfo.description}
+                            {element.volumeInfo.description}
                         </Card.Text>
                         <Row>
                             <Button variant="primary" href={'_' + element.saleInfo.buyLink} className={"mr-2"}>See book</Button>
@@ -70,12 +72,16 @@ const Search = () => {
     }
 
     return(
-        <Container>
+        <Container className={'my-3'}>
             <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Book Search</Form.Label>
                 <InputGroup className="mb-3">
                     <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1" onClick={handleSubmit}>@</InputGroup.Text>
+                    <InputGroup.Text id="basic-addon1" onClick={handleSubmit}>
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                            <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                        </svg>
+                    </InputGroup.Text>
                     </InputGroup.Prepend>
                     <FormControl
                     placeholder="Search here!"
