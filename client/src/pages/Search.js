@@ -61,7 +61,7 @@ const Search = () => {
                             {element.volumeInfo.description}
                         </Card.Text>
                         <Row>
-                            <Button variant="primary" href={'_' + element.saleInfo.buyLink} className={"mr-2"}>See book</Button>
+                            <Button variant="primary" href={element.saleInfo.buyLink} target="_blank" className={"mr-2"}>See book</Button>
                             <Button data-index={index} variant="primary" onClick={saveBook} href="/">Save Book</Button>
                         </Row>
                     </Col>
