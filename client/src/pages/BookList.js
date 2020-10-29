@@ -23,14 +23,14 @@ const BookList = () => {
     const renderBook = (book, index) => {
       console.log(books)
       return(
-        <Container>
+        <Container className={'my-2'}>
           <Book key={index} data={book} on></Book>
         </Container>
       )
     }
 
     return(
-        <div>
+        <div className={'mt-3'}>
           {books ?  books.map(renderBook) : 'waiting...'}
         </div>
     )

@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from "axios"
 
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import API from '../utils/API';
 import Book from '../components/Book';
-import Card from 'react-bootstrap/Card'
-import Row from 'react-bootstrap/Row'
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
+import InputGroup from 'react-bootstrap/InputGroup'
+import FormControl from 'react-bootstrap/FormControl';
 
 const Search = () => {
     const [books, setBooks] = useState();
     const [search, setSearch] = useState('harry potter')
+    const [label, setLabel] = useState('Book Search')
 
-    useEffect(() => {
-        API.getSearchBooks(search).then(res => setBooks(res.data.items))
-    }, [search])
+    const handleSubmit = () => {
+        API.getSearchBooks(search).then(res => {
+            setBooks(res.data.items)
+        })
+    }
 
-    const handleChange = (e) => {
-        if (e.target.value.length > 5) {
-            setTimeout(() => {
-                setSearch(e.target.value);
-            }, 1500)
-        }
-    } 
+    useEffect(() => {}, [])
 
     const saveBook = (e) => {
         let index = e.target.dataset.index
@@ -44,21 +43,25 @@ const Search = () => {
     }
 
     const renderBook = (element, index) => {
+        console.log(element)
         
         return (
             <Card>
-            <Card.Header>{element.volumeInfo.authors[0] === undefined ? 'no author :(' : element.volumeInfo.authors[0]}</Card.Header>
+            <Card.Header>{element.volumeInfo.authors[0] === "undefined" ? 'no author :(' : element.volumeInfo.authors[0]}</Card.Header>
             <Card.Body>
                 <Row>
                     <Col xs={2}>
-                        <Image src={element.volumeInfo.imageLinks.smallThumbnail === undefined ? 'no image :(' : element.volumeInfo.imageLinks.smallThumbnail} rounded />
+                        <Image src={element.volumeInfo.imageLinks.smallThumbnail === "undefined" ? 'no image :(' : element.volumeInfo.imageLinks.smallThumbnail} rounded />
                     </Col>
                     <Col xs={10}>
-                        <Card.Title>{element.volumeInfo.title === undefined ? 'no title :(' : element.volumeInfo.title}</Card.Title>
+                        <Card.Title>{element.volumeInfo.title === "undefined" ? 'no title :(' : element.volumeInfo.title}</Card.Title>
                         <Card.Text>
-                            {element.volumeInfo.description === undefined ? 'no description :(' : element.volumeInfo.description}
+                            {element.volumeInfo.description === "undefined" ? 'no description :(' : element.volumeInfo.description}
                         </Card.Text>
-                        <Button data-index={index} variant="primary" onClick={saveBook} href="/">Save Book</Button>
+                        <Row>
+                            <Button variant="primary" href={'_' + element.saleInfo.buyLink} className={"mr-2"}>See book</Button>
+                            <Button data-index={index} variant="primary" onClick={saveBook} href="/">Save Book</Button>
+                        </Row>
                     </Col>
                 </Row>
             </Card.Body>
@@ -69,8 +72,18 @@ const Search = () => {
     return(
         <Container>
             <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Book Search</Form.Label>
-                <input name="search" onChange={handleChange}/>
+                <Form.Label>{label}</Form.Label>
+                <InputGroup className="mb-3">
+                    <InputGroup.Prepend>
+                    <InputGroup.Text id="basic-addon1" onClick={handleSubmit}>@</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl
+                    placeholder="Username"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    onChange={(e) => setSearch(e.target.value)}
+                    />
+                </InputGroup>
             </Form.Group>
             {books ? books.map(renderBook) : ''}
         </Container>

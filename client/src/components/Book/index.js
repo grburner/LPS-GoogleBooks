@@ -26,7 +26,7 @@ const Book = ({data, key}) => {
                             {data.description}
                         </Card.Text>
                         <Row>
-                            <Button variant="primary" href={data.link}>See book</Button>
+                            <Button variant="primary" href={'_' + data.link} className={"mr-2"}>See book</Button>
                             <Button data-index={key} onClick={removeBook} href="/">Remove Book</Button>
                         </Row>
                     </Col>
