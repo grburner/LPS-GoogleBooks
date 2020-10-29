@@ -4,27 +4,37 @@ import axios from "axios"
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import API from '../utils/API';
-import Card from 'react-bootstrap/Card';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
-import Image from 'react-bootstrap/Image'
-import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl';
+import Book from '../components/Book';
 
 const Search = () => {
-    const [books, setBooks] = useState();
+    const [books, setBooks] = useState([])
     const [search, setSearch] = useState('harry potter')
     const [searched, setSearched] = useState(false)
 
-    const handleSubmit = () => {
-        API.getSearchBooks(search).then(res => {
-            {setBooks(res.data.items);
-            setSearched(true)}
+    const createBooks = (data) => {
+        let bookList = []
+        data.forEach(elem => {
+            console.log(elem)
+            const pushItem = {
+                "author": elem.volumeInfo.authors[0],
+                "image": elem.volumeInfo.imageLinks.smallThumbnail,
+                "title": elem.volumeInfo.title,
+                "description": elem.volumeInfo.description,
+                "link": elem.saleInfo.buyLink
+            }
+            bookList.push(pushItem)
         })
+        setBooks(bookList)
     }
 
-    useEffect(() => {}, [])
+
+    const handleSubmit = () => {
+        API.getSearchBooks(search).then(res => {
+            createBooks(res.data.items)
+        })
+    }
 
     const saveBook = (e) => {
         let index = e.target.dataset.index
@@ -46,28 +56,7 @@ const Search = () => {
         console.log(element)
         
         return (
-            <Card className={'my-2'}>
-            <Card.Header>{element.volumeInfo.authors[0]}</Card.Header>
-            <Card.Body>
-                <Row>
-                    <Col xs={2}>
-                        <Image src={element.volumeInfo.imageLinks.smallThumbnail} rounded />
-                    </Col>
-                    <Col xs={10}>
-                        <Card.Title>
-                            {element.volumeInfo.title}
-                        </Card.Title>
-                        <Card.Text>
-                            {element.volumeInfo.description}
-                        </Card.Text>
-                        <Row>
-                            <Button variant="primary" href={element.saleInfo.buyLink} target="_blank" className={"mr-2"}>See book</Button>
-                            <Button data-index={index} variant="primary" onClick={saveBook} href="/">Save Book</Button>
-                        </Row>
-                    </Col>
-                </Row>
-            </Card.Body>
-            </Card>
+            <Book data={element} index={index}></Book>
         )
     }
 
