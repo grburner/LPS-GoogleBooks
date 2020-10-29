@@ -4,7 +4,6 @@ import axios from "axios"
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import API from '../utils/API';
-import Book from '../components/Book';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
@@ -16,11 +15,12 @@ import FormControl from 'react-bootstrap/FormControl';
 const Search = () => {
     const [books, setBooks] = useState();
     const [search, setSearch] = useState('harry potter')
-    const [label, setLabel] = useState('Book Search')
+    const [searched, setSearched] = useState(false)
 
     const handleSubmit = () => {
         API.getSearchBooks(search).then(res => {
-            setBooks(res.data.items)
+            {setBooks(res.data.items);
+            setSearched(true)}
         })
     }
 
@@ -72,19 +72,21 @@ const Search = () => {
     return(
         <Container>
             <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>{label}</Form.Label>
+                <Form.Label>Book Search</Form.Label>
                 <InputGroup className="mb-3">
                     <InputGroup.Prepend>
                     <InputGroup.Text id="basic-addon1" onClick={handleSubmit}>@</InputGroup.Text>
                     </InputGroup.Prepend>
                     <FormControl
-                    placeholder="Username"
-                    aria-label="Username"
+                    placeholder="Search here!"
+                    aria-label="Search here!"
                     aria-describedby="basic-addon1"
                     onChange={(e) => setSearch(e.target.value)}
                     />
                 </InputGroup>
             </Form.Group>
+            {searched && !books ? <h1>sorry, no results... try again.</h1> : ''}
+            {!searched && !books ? <h1>Search for a book!</h1> : ''}
             {books ? books.map(renderBook) : ''}
         </Container>
     )
